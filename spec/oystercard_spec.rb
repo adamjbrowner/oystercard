@@ -27,4 +27,11 @@ describe Oystercard do
 
   end
 
+   context 'when a user wants to deduct the fare from their balance' do
+     it{ is_expected.to respond_to(:deduct).with(1).argument }
+
+     it 'deducts the fare from the balance' do
+       expect{subject.deduct(1)}.to change{ subject.balance }.by (-1)
+     end
+   end
 end
