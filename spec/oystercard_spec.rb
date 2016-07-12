@@ -17,9 +17,12 @@ describe Oystercard do
 
   context 'when a user want to top_up their oystercard balance' do
 
+    it "prevents the user from adding money beyond the limit" do
+      subject.instance_variable_set(:@balance, Oystercard::LIMIT)
+      expect{subject.top_up(1)}.to raise_error("Maximum balance of £#{Oystercard::LIMIT} reached")
+    end
     it 'add top_up balance to card' do
-      subject.top_up(5)
-      expect( subject.balance ).to eq(5)
+      expect{ subject.top_up(5) }.to change{ subject.balance }.by 5
     end
 
   end
