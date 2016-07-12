@@ -13,7 +13,15 @@ describe Oystercard do
      card = Oystercard.new
      expect( subject.balance ).to eq(0)
    end
-
  end
+
+  context 'when a user want to top_up their oystercard balance' do
+
+    it 'add top_up balance to card' do
+      subject.top_up(5)
+      expect( subject.balance ).to eq(5)
+    end
+
+  end
 
 end
