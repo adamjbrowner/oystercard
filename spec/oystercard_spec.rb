@@ -24,16 +24,7 @@ describe Oystercard do
     it 'add top_up balance to card' do
       expect{ subject.top_up(5) }.to change{ subject.balance }.by 5
     end
-
   end
-
-  context 'when a user wants to deduct the fare from their balance' do
-
-    it 'deducts the fare from the balance' do
-      expect{subject.deduct(1)}.to change{ subject.balance }.by (-1)
-    end
-  end
-
   context 'when a user touches in and out of their journey' do
       before(:each) do
         subject.top_up(1)
@@ -41,18 +32,22 @@ describe Oystercard do
     it "checks whether it is on a journey" do
       expect(subject).not_to be_in_journey
     end
-    it 'raises an error if balance is below minimum value' do
-      subject.deduct(1)
-      expect{subject.touch_in}.to raise_error("Sorry, balance below minimum threshold")
-    end
     it 'knows when it\'s on a journey when the user touchs in' do
       subject.touch_in
       expect(subject).to be_in_journey
+    end
+    it 'raises an error if balance is below minimum value' do
+      subject.touch_out
+      expect{subject.touch_in}.to raise_error("Sorry, balance below minimum threshold")
     end
     it 'knows that it\'s not on a journey when the user touches out' do
       subject.touch_in
       subject.touch_out
       expect(subject).to_not be_in_journey
+    end
+    it 'deducts the fare from the card' do
+      subject.touch_in
+      expect{subject.touch_out}.to change{subject.balance}.by -1
     end
   end
 end
