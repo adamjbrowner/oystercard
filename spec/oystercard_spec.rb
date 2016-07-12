@@ -7,13 +7,13 @@ require 'oystercard'
 
 describe Oystercard do
 
- context 'when a new card is initialized' do
+  context 'when a new card is initialized' do
 
-   it 'has a default monetary value of zero' do
-     card = Oystercard.new
-     expect( subject.balance ).to eq(0)
-   end
- end
+    it 'has a default monetary value of zero' do
+      card = Oystercard.new
+      expect( subject.balance ).to eq(0)
+    end
+  end
 
   context 'when a user want to top_up their oystercard balance' do
 
@@ -27,11 +27,26 @@ describe Oystercard do
 
   end
 
-   context 'when a user wants to deduct the fare from their balance' do
-     it{ is_expected.to respond_to(:deduct).with(1).argument }
+  context 'when a user wants to deduct the fare from their balance' do
 
-     it 'deducts the fare from the balance' do
-       expect{subject.deduct(1)}.to change{ subject.balance }.by (-1)
-     end
-   end
+    it 'deducts the fare from the balance' do
+      expect{subject.deduct(1)}.to change{ subject.balance }.by (-1)
+    end
+  end
+
+  context 'when a user touches in and out of their journey' do
+
+    it "checks whether it is on a journey" do
+      expect(subject).not_to be_in_journey
+    end
+    it 'knows when it\'s on a journey when the user touchs in' do
+      subject.touch_in
+      expect(subject).to be_in_journey
+    end
+    it 'knows that it\'s not on a journey when the user touches out' do
+      subject.touch_in
+      subject.touch_out
+      expect(subject).to_not be_in_journey
+    end
+  end
 end
