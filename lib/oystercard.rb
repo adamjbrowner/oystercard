@@ -3,6 +3,7 @@ class Oystercard
 
   LIMIT = 90
   MINIMUM_BALANCE = 1
+  MINIMUM_CHARGE = 1
   attr_reader :balance
 
   def initialize
@@ -25,10 +26,12 @@ class Oystercard
   end
 
   def touch_out
-    @balance -= MINIMUM_BALANCE
+    deduct(MINIMUM_CHARGE)
     @in_journey = false
   end
+
   private
+
   def deduct(fare)
     @balance -= fare
   end
