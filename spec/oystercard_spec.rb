@@ -35,9 +35,15 @@ describe Oystercard do
   end
 
   context 'when a user touches in and out of their journey' do
-
+      before(:each) do
+        subject.top_up(1)
+      end
     it "checks whether it is on a journey" do
       expect(subject).not_to be_in_journey
+    end
+    it 'raises an error if balance is below minimum value' do
+      subject.deduct(1)
+      expect{subject.touch_in}.to raise_error("Sorry, balance below minimum threshold")
     end
     it 'knows when it\'s on a journey when the user touchs in' do
       subject.touch_in
