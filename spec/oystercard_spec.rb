@@ -17,13 +17,6 @@ describe Oystercard do
    end
  end
 
-describe '#deduct' do
-    it 'reduces the balance by specified amount' do
-      subject.top_up 15
-      expect{ subject.deduct 5}.to change{ subject.balance }.by -5
-    end
-  end
-
 context 'is card in journey or not in journey'
   it 'is initially not in a journey' do
    expect(subject).not_to be_in_journey
@@ -45,6 +38,12 @@ context 'is card in journey or not in journey'
 describe '#touch_in' do
   it 'raises an error when card is below minimum balance' do
     expect { subject.touch_in }.to raise_error "No funds available please top up"
+  end
+end
+
+describe '#touch_out' do
+  it "charges the minumum fare on touch_out" do
+    expect{ subject.touch_out }.to change{ subject.balance }.by -(Oystercard::MINIMUM_FARE)
   end
 end
 
