@@ -30,14 +30,22 @@ context 'is card in journey or not in journey'
   end
 
   it 'can touch in' do
+  subject.top_up 10
    subject.touch_in
    expect(subject).to be_in_journey
   end
 
   it 'can touch out' do
+    subject.top_up 10
     subject.touch_in
     subject.touch_out
     expect(subject).not_to be_in_journey
   end
+
+describe '#touch_in' do
+  it 'raises an error when card is below minimum balance' do
+    expect { subject.touch_in }.to raise_error "No funds available please top up"
+  end
+end
 
 end
