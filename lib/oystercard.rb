@@ -4,7 +4,7 @@ MINIMUM_BALANCE = 1
 MAXIMUM_BALANCE = 90
 MINIMUM_FARE = 1
 
-attr_reader :balance, :entry_station, :journeys
+attr_reader :balance, :journeys
 
   def initialize
     @balance = 0
