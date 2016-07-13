@@ -4,11 +4,12 @@ MINIMUM_BALANCE = 1
 MAXIMUM_BALANCE = 90
 MINIMUM_FARE = 1
 
-attr_reader :balance, :entry_station
+attr_reader :balance, :entry_station, :stations, :journeys
 
   def initialize
     @balance = 0
-    # @in_journey = false
+    @stations = []
+    @journeys = {}
   end
 
   def top_up(amount)
@@ -18,12 +19,17 @@ attr_reader :balance, :entry_station
 
   def touch_in(entry_station)
     fail "No funds available please top up" if balance < MINIMUM_BALANCE
-    @entry_station = entry_station
+    @stations << entry_station
   end
 
-  def touch_out
+  def touch_out(exit_station)
     deduct(MINIMUM_FARE)
-    @entry_station = nil
+    @stations << exit_station
+    journey
+  end
+
+  def journey
+    @journeys[:journey_1] = @stations
   end
 
   def in_journey?
