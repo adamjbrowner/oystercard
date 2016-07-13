@@ -10,7 +10,6 @@ describe Oystercard do
   context 'when a new card is initialized' do
 
     it 'has a default monetary value of zero' do
-      card = Oystercard.new
       expect( subject.balance ).to eq(0)
     end
   end
