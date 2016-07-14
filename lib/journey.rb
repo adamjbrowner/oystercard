@@ -15,7 +15,7 @@ class Journey
   end
 
   def complete?
-    @current_journey[:entry_station] && @current_journey[:exit_station]
+    (@current_journey[:entry_station] != nil) && (@current_journey[:exit_station] != nil)
   end
 
   def touch_in_fare

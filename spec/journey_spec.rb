@@ -5,7 +5,7 @@ describe Journey do
   let(:entry_station) {double(:station)}
   let(:exit_station) {double(:station)}
 
-  describe '#entry_station' do
+  describe '#entrance' do
     it "Stores entry_station in a hash" do
       journey = Journey.new
       journey.entrance(entry_station)
@@ -21,16 +21,11 @@ describe Journey do
     end
   end
 
-  describe "#fare" do
-    it "calculate minumum fare" do
-      journey = Journey.new
-      journey.entrance(entry_station)
-      journey.finish(exit_station)
-      expect(journey.fare).to eq 1
-    end
-    it "returns penalty fare if no entry_station" do
-      journey = Journey.new
-      expect(journey.fare).to eq 6
+  describe "#complete" do
+    it 'determines whether current journey is complete' do
+      subject.entrance(entry_station)
+      subject.finish(exit_station)
+      expect(subject.complete?).to eq true
     end
   end
 end
